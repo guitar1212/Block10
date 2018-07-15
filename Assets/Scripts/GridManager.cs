@@ -18,8 +18,8 @@ public class GridManager : MonoBehaviour {
 
     public int ColorCount = 4;
 
-    private float GridWidth = 130;
-    private float GridHeight = 130;
+    private float GridWidth = 150;
+    private float GridHeight = 150;
 
     private List<GridUnit> GridList = new List<GridUnit>();
 
@@ -44,20 +44,24 @@ public class GridManager : MonoBehaviour {
 
     public void CreateGrids()
     {
+        DeleteGrids();
         GridList.Clear();
-        
 
-        float posX = StartX;
-        float posY = StartY;
+        float widthOffset = (Col - 1) * GridWidth / 2f;
+        float heightOffset = Row * GridHeight / 2f;
+
+        float posX = StartX - widthOffset;
+        float posY = StartY - heightOffset;
         for (int i = 0; i < Row; i++)
         {
-            posX = StartX;
+            posX = StartX - widthOffset;
             for (int j = 0; j < Col; j++)
             {
                 GameObject grid = GameObject.Instantiate(GridPrefab);
                 grid.transform.SetParent(GridContainer);
                 grid.transform.localPosition = new Vector3(posX, posY);
                 grid.transform.localScale = Vector3.one;
+                grid.name = "Grid_" + i + "_" + j; 
 
                 GridUnit unit = grid.GetComponent<GridUnit>();
                 int colorIndex = Random.Range(0, ColorList.Length);
@@ -72,6 +76,18 @@ public class GridManager : MonoBehaviour {
         }
     }
 
+
+
+    public void DeleteGrids()
+    {
+        foreach (GridUnit unit in GridList)
+        {
+            GameObject.DestroyObject(unit.gameObject);
+
+        }
+
+        GridList.Clear();
+    }
 
     // Update is called once per frame
     void Update () {
