@@ -6,7 +6,7 @@ public class GameSystem : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		// hello
+		// hello world
 	}
 	
 	// Update is called once per frame
